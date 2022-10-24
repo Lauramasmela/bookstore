@@ -1,5 +1,6 @@
 package com.example.bookstore.controller;
 
+import com.example.bookstore.dtos.AuthorDTO;
 import com.example.bookstore.model.Author;
 import com.example.bookstore.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,16 @@ public class AuthorController {
     @GetMapping(path = "/{id}/details")
     public Author getAuthorDetails(Author author){
         return authorService.getAuthorDetails(author);
+    }
+
+    @PutMapping(path = "/{id}")
+    public void updateAuthor(
+            @PathVariable("id") Long authorId,
+            @RequestBody AuthorDTO authorDTO
+
+            ){
+
+        authorService.updateAuthor(authorId, authorDTO);
     }
 
 
