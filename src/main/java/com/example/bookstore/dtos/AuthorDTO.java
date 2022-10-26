@@ -1,6 +1,6 @@
 package com.example.bookstore.dtos;
 
-public class AuthorDTO {
+/*public class AuthorDTO {
     private String firstName;
     private String lastName;
     private String address;
@@ -58,4 +58,4 @@ public class AuthorDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-}
+}*/

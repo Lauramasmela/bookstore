@@ -1,6 +1,7 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.dtos.AuthorDTO;
+
+
 import com.example.bookstore.model.Author;
 import com.example.bookstore.repository.AuthorRepository;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
+
     public List<Author> getListOfAuthors(){
        return authorRepository.findAll();
     }
@@ -25,7 +27,7 @@ public class AuthorService {
     public void addNewAuthor(Author author){
         Optional<Author> authorOptional = authorRepository.findAuthorByEmail(author.getEmail());
         if(authorOptional.isPresent()){
-            throw new IllegalStateException("This authorDTO.getEmail() already exists");
+            throw new IllegalStateException("This email already exists");
         }
         authorRepository.save(author);
         System.out.println("A new author has been saved correctly ! :)");
@@ -35,34 +37,32 @@ public class AuthorService {
     }
 
     @Transactional
-    public void updateAuthor(Long authorId, AuthorDTO authorDTO){
+    public void updateAuthor(Long authorId, String firstName, String lastName, String address, String city, String zipCode, String email){
         Author author = authorRepository.findById(authorId)
                 .orElseThrow(() -> new IllegalStateException(
                         "The author with the id "+authorId+ " doesn't exist"));
-        if(authorDTO.getFirstName() != null && authorDTO.getFirstName().length()>0 && !Objects.equals(author.getFirstName(), authorDTO.getFirstName())){
-            author.setFirstName(authorDTO.getFirstName());
+
+        if(firstName != null && firstName.length()>0 && !Objects.equals(author.getFirstName(), firstName)){
+            author.setFirstName(firstName);
         }
-        if(authorDTO.getLastName() != null && authorDTO.getLastName().length()>0 && !Objects.equals(author.getLastName(), authorDTO.getLastName())){
-            author.setLastName(authorDTO.getLastName());
+        if(lastName != null && lastName.length()>0 && !Objects.equals(author.getLastName(),lastName)){
+            author.setLastName(lastName);
         }
-        
-        if(authorDTO.getAddress() != null && authorDTO.getAddress().length()>0 && !Objects.equals(author.getAddress(), authorDTO.getAddress())){
-            author.setAddress(authorDTO.getAddress());
+        if(address != null && address.length()>0 && !Objects.equals(author.getAddress(), address)){
+            author.setAddress(address);
         }
-        if(authorDTO.getCity() != null && authorDTO.getCity().length()>0 && !Objects.equals(author.getCity(), authorDTO.getCity())){
-            author.setCity(authorDTO.getCity());
+        if(city != null && city.length()>0 && !Objects.equals(author.getCity(), city)){
+            author.setCity(city);
         }
-        if(authorDTO.getZipCode() != null && authorDTO.getZipCode().length()>0 && !Objects.equals(author.getZipCode(), authorDTO.getZipCode())){
-            author.setZipCode(authorDTO.getZipCode());
+        if(zipCode != null && zipCode.length()>0 && !Objects.equals(author.getZipCode(), zipCode)){
+            author.setZipCode(zipCode);
         }
-        if(authorDTO.getEmail() != null && authorDTO.getEmail().length()>0 && !Objects.equals(author.getEmail(), authorDTO.getEmail())){
-           Optional<Author> authorOptional = authorRepository.findAuthorByEmail(authorDTO.getEmail());
-           if(authorOptional.isPresent()){
-               throw new IllegalStateException("This authorDTO.getEmail() already exists");
-           }
-            author.setEmail(authorDTO.getEmail());
+        if(email != null && email.length()>0 && !Objects.equals(author.getEmail(), email)){
+            author.setEmail(email);
         }
+
         authorRepository.save(author);
+
     }
 
 
